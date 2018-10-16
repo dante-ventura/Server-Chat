@@ -4,12 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "server": "node ./server/server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "electron": "^3.0.4"
+    "electron": "^3.0.4",
+    "json-socket": "^0.3.0"
   },
   "repository": {
     "type": "git",

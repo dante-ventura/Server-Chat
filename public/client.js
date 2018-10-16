@@ -15,7 +15,7 @@ function sendMessage(e){
           <div class="media-content">
             <div class="content">
               <p>
-                <strong>John Smith</strong> <small>@johnsmith</small> <small>31m</small>
+                <strong>John Smith</strong>
                 <br>
                 ${e.currentTarget.value}
               </p>
