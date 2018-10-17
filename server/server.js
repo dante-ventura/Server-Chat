@@ -3,6 +3,10 @@ const net = require('net'),
 
 var sockets = [];      
 
+var dir = __dirname.replace('server', '');
+require(dir + '/database.js');   
+require(dir + '/dbAccount.js');   
+
 const server = net.createServer((socket) => {
     var remoteAddress = socket.remoteAddress + ":" + socket.remotePort;
 
@@ -15,6 +19,26 @@ const server = net.createServer((socket) => {
         switch(data.id){
             case 'MESSAGE':
                 broadcastMessage(data);
+                break;
+            case 'REGISTER':
+                dbAccount.register(data.username, data.password, '', (success) => {
+                    socket.sendMessage({
+                        id: 'REGISTER',
+                        success: success,
+                        username: data.username,
+                        password: data.password
+                    })
+                })
+                break;
+            case 'LOGIN':
+                dbAccount.verify(data.username, data.password, (exists) => {
+                    socket.sendMessage({
+                        id: 'LOGIN',
+                        exists: exists,
+                        username: data.username,
+                        password: data.password
+                    })
+                })
                 break;
         }
     });
@@ -33,9 +57,13 @@ const server = net.createServer((socket) => {
 })
 
 function broadcastMessage(data){
-    sockets.forEach( (socket) => { 
-        socket.sendMessage(data);
-    });
+    dbAccount.verify(data.user, data.pass, (exists) => {
+        if(exists){
+            sockets.forEach( (socket) => { 
+                socket.sendMessage(data);
+            });
+        }
+    })
 }
 
 server.on('error', (err) => {

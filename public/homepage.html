@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="./bulma.min.css">
+        <link rel="stylesheet" href="./custom.css">
+        <script defer src="./fontawesome.js"></script>
+        <script type="text/javascript" src="./client.js"></script>
+    </head>
+    <body onload="initServerConnection()">          
+        <div class="field">
+            <p class="control has-icons-left has-icons-right">
+                <input class="input" id="userBox" type="username" placeholder="Username">
+                <span class="icon is-small is-left">
+                <i class="fas fa-user"></i>
+                </span>
+            </p>
+        </div>
+        <div class="field">
+            <p class="control has-icons-left">
+                <input class="input" id="passwordBox" type="password" placeholder="Password">
+                <span class="icon is-small is-left">
+                <i class="fas fa-lock"></i>
+                </span>
+            </p>
+        </div>
+
+        <a class="button is-fullwidth is-small" onclick="register()">Register</a>
+        <a class="button is-fullwidth is-small" onclick="login()">Login</a>
+    </body>
+</html>
