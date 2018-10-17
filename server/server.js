@@ -8,6 +8,7 @@ const server = net.createServer((socket) => {
 
     socket = new JsonSocket(socket);
     sockets.push(socket);
+    socket.loc = sockets.length-1;
 
     socket.on('message', (data) => {
         console.log(data);
@@ -18,6 +19,14 @@ const server = net.createServer((socket) => {
         }
     });
 
+    socket.on('error', (err) => {
+        console.log(err);
+    })
+
+    socket.on('close', (err) => {
+        sockets.splice(socket.loc, 1);
+        console.log(`Socket at location: ${socket.loc} was removed.`)
+    })
     // socket.once('close', () => {
 
     // })
@@ -30,7 +39,7 @@ function broadcastMessage(data){
 }
 
 server.on('error', (err) => {
-    throw err;
+    console.log(err);
 })
 
 server.listen(3000, "127.0.0.1", () => {

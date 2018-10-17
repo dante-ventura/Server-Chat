@@ -10,3 +10,14 @@
     position: relative;
     top:-35px;
 }
+
+::-webkit-scrollbar {     
+    background-color: #fff;
+    width: .4em
+}
+
+::-webkit-scrollbar-thumb:window-inactive,
+::-webkit-scrollbar-thumb {
+    background:  rgb(156, 156, 156);
+    border-radius: 10px;
+}
