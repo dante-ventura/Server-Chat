@@ -10,8 +10,11 @@ const server = net.createServer((socket) => {
     sockets.push(socket);
 
     socket.on('message', (data) => {
-        if(data.id === 'MESSAGE'){
-            broadcastMessage(data);
+        console.log(data);
+        switch(data.id){
+            case 'MESSAGE':
+                broadcastMessage(data);
+                break;
         }
     });
 

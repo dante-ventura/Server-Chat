@@ -14,9 +14,9 @@ function initServerConnection(){
 }
 
 function createWindow () {
-  initServerConnection()
+  //initServerConnection()
   win = new BrowserWindow({ width: 800, height: 600 })
-  win.setMenu(null)
+  //win.setMenu(null)
   win.loadFile('./public/index.html')
 }
 
