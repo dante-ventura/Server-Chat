@@ -32,7 +32,7 @@ function initServerConnection(){
     document.getElementById('passwordBox').value = localStorage.getItem('password');
   }
   socket = new JsonSocket(new net.Socket());
-  socket.connect(3000, "127.0.0.1");
+  socket.connect(3000, "DANTE-PC");
   socket.on('connect', () => {
     socket.on('message', (data) => {
       switch(data.id){

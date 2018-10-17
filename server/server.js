@@ -48,7 +48,7 @@ const server = net.createServer((socket) => {
     })
 
     socket.on('close', (err) => {
-        sockets.splice(socket.loc, 1);
+        remove(sockets, socket);
         console.log(`Socket at location: ${socket.loc} was removed.`)
     })
     // socket.once('close', () => {
@@ -70,6 +70,10 @@ server.on('error', (err) => {
     console.log(err);
 })
 
-server.listen(3000, "127.0.0.1", () => {
+server.listen(3000, "DANTE-PC", () => {
     console.log(`Server running...`);
 }) 
+
+function remove(array, element) {
+    return array.filter(e => e !== element);
+}
