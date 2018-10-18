@@ -80,7 +80,7 @@ server.on('error', (err) => {
     console.log(err);
 })
 
-server.listen(3000, "127.0.0.1", () => {
+server.listen(3000, "25.0.234.95", () => {
     console.log(`Server running...`);
 }) 
 

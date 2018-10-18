@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./bulma.min.css">
+    <link rel="stylesheet" href="./custom.css">
+    <script defer src="./fontawesome.js"></script>
+    <script type="text/javascript" src="./client.js"></script>
+  </head>
+  <body onload="initServerConnection()">
+  <section class="section">
+    <div class="container" id="messageContainer">
+      
+        <div class="box" id="m1">
+            <article class="media">
+              <div class="media-left">
+                <figure class="image is-64x64">
+                  <img src="https://www.logolynx.com/images/logolynx/4e/4e0664c4184e0b071036d3bd7b58a2b1.png" alt="Image">
+                </figure>
+              </div>
+              <div class="media-content">
+                <div class="content">
+                  <p>
+                    <strong>Admin</strong>
+                    <br>
+                    Welcome to the swag chat! Enjoy your time here :D
+                  </p>
+                </div>
+              </div>
+            </article>
+          </div>
+          
+    </div>
+  </section>
+  </body>
+
+  <footer>
+      <form action="#">
+          <input class="input" id="textBox" type="text" placeholder="Text input" onkeypress="sendMessage(event)">
+      </form>
+  </footer>
+</html>

@@ -2,7 +2,8 @@ var messageCount = 1;
 
 var net = require('net'),
     JsonSocket = require('json-socket'),
-    store = require('store')
+    store = require('store'),
+    storage = require('electron-json-storage');
 
 var socket;
 
@@ -26,13 +27,19 @@ function login(){
   })
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+    if(window.location.toString().includes('homepage')){
+      storage.get('account', function(error, data) {
+        if (error) throw error;    
+        document.getElementById('userBox').value = data.username;
+        document.getElementById('passwordBox').value = data.password;
+      })
+    }
+})
+
 function initServerConnection(){
-  if(window.location.toString().includes('homepage')){
-    document.getElementById('userBox').value = localStorage.getItem('username');
-    document.getElementById('passwordBox').value = localStorage.getItem('password');
-  }
   socket = new JsonSocket(new net.Socket());
-  socket.connect(3000, "DANTE-PC");
+  socket.connect(3000, "127.0.0.1");
   socket.on('connect', () => {
     socket.on('message', (data) => {
       switch(data.id){
@@ -41,8 +48,9 @@ function initServerConnection(){
           break;
         case 'REGISTER':
           if(data.success === true){
-            localStorage.setItem('username', data.username);
-            localStorage.setItem('password', data.password);
+            storage.set('account', { username: data.username, password: data.password }, (error) => {
+              if (error) throw error;
+            });
             window.location = './index.html';
           }
           else
@@ -50,8 +58,9 @@ function initServerConnection(){
           break;
         case 'LOGIN':
           if(data.exists === true){
-            localStorage.setItem('username', data.username);
-            localStorage.setItem('password', data.password);
+            storage.set('account', { username: data.username, password: data.password }, (error) => {
+              if (error) throw error;
+            });
             window.location = './index.html';
           }
           else
@@ -68,27 +77,34 @@ function sendMessage(e){
 
         var text = e.currentTarget.value;
 
-        var username = localStorage.getItem('username');
-        var password = localStorage.getItem('password');
-
-        if(text.charAt(0) === '/'){
-          var command = text.substr(0,text.indexOf(' '));
-          var content = text.replace(command, '');
-          switch(command.toLowerCase()){
-
+        storage.get('account', function(error, data) {
+          if (error) throw error;    
+          
+          if(text.charAt(0) === '/'){
+            var command = text.substr(0,text.indexOf(' '));
+            var content = text.replace(command, '');
+            switch(command.toLowerCase()){
+              case '/setprofileimage':
+                socket.sendMessage({
+                  id: 'SETPROFILEIMAGE',
+                  username: data.username,
+                  password: data.password,
+                  link: content
+                })
+            }
           }
-        }
-        else if(username.length > 0){
-          socket.sendMessage({
-            id: 'MESSAGE',
-            user: username,
-            pass: password,
-            value: text
-          });
-        }
-        else{
-          alert('Please register/login before sending messages!');
-        }
+          else if(data.username.length > 0){         
+            socket.sendMessage({
+              id: 'MESSAGE',
+              user: data.username,
+              pass: data.password,
+              value: text
+            });
+          }
+          else{
+            alert('Please register/login before sending messages!');
+          }
+        });
 
         e.currentTarget.value = '';
     }
@@ -100,7 +116,7 @@ function receiveMessage(data){
    <article class="media">
      <div class="media-left">
        <figure class="image is-64x64">
-         <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image">
+         <img src="${data.profileImage}" alt="Image">
        </figure>
      </div>
      <div class="media-content">
