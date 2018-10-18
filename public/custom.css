@@ -2,8 +2,28 @@
     position: fixed;
     bottom: 5%;
     width: 80%;
-    margin-left: 10%;
+    margin-left: 17%;
 
+}
+
+#profileImageTextBoxFigure {
+    position: fixed;
+    bottom: 4%;
+    margin-left: 3%;
+}
+
+#settingsBtn {
+    position: fixed;
+    bottom: 5%;
+    margin-left: 11%; 
+}
+
+#profileImage {
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
 }
 
 .box {

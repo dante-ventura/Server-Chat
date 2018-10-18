@@ -28,13 +28,20 @@ function login(){
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  storage.get('account', function(error, data) {
+    if (error) throw error;    
+
     if(window.location.toString().includes('homepage')){
-      storage.get('account', function(error, data) {
-        if (error) throw error;    
-        document.getElementById('userBox').value = data.username;
-        document.getElementById('passwordBox').value = data.password;
-      })
+        if(data.username.length > 0){
+          document.getElementById('userBox').value = data.username;
+          document.getElementById('passwordBox').value = data.password;
+        }
     }
+    else if(window.location.toString().includes('index')){
+      document.getElementById('profileImageTextBox').src = data.profileImage;
+    }
+    
+  })
 })
 
 function initServerConnection(){
@@ -58,7 +65,7 @@ function initServerConnection(){
           break;
         case 'LOGIN':
           if(data.exists === true){
-            storage.set('account', { username: data.username, password: data.password }, (error) => {
+            storage.set('account', { username: data.username, password: data.password, profileImage: data.profileImage }, (error) => {
               if (error) throw error;
             });
             window.location = './index.html';
@@ -116,7 +123,7 @@ function receiveMessage(data){
    <article class="media">
      <div class="media-left">
        <figure class="image is-64x64">
-         <img src="${data.profileImage}" alt="Image">
+         <img class="is-rounded" src="${data.profileImage}" id ="profileImage" alt="Image">
        </figure>
      </div>
      <div class="media-content">

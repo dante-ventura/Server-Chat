@@ -9,8 +9,7 @@ var accountSchema = new mongoose.Schema({
 accountSchema.statics.register = function(user, pass, profileImage, callback){
     var acc = new dbAccount({
         username: user,
-        password: pass,
-        profileImage: profileImage
+        password: pass
     })
 
     acc.save((err) => {

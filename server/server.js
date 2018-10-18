@@ -31,12 +31,13 @@ const server = net.createServer((socket) => {
                 })
                 break;
             case 'LOGIN':
-                dbAccount.verify(data.username, data.password, (exists) => {
+                dbAccount.verify(data.username, data.password, (exists, acc) => {
                     socket.sendMessage({
                         id: 'LOGIN',
                         exists: exists,
                         username: data.username,
-                        password: data.password
+                        password: data.password,
+                        profileImage: acc.profileImage
                     })
                 })
                 break;
