@@ -55,7 +55,7 @@ function initServerConnection(){
           break;
         case 'REGISTER':
           if(data.success === true){
-            storage.set('account', { username: data.username, password: data.password }, (error) => {
+            storage.set('account', { username: data.username, password: data.password, profileImage: data.profileImage }, (error) => {
               if (error) throw error;
             });
             window.location = './index.html';

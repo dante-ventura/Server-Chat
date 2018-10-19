@@ -21,12 +21,13 @@ const server = net.createServer((socket) => {
                 broadcastMessage(data);
                 break;
             case 'REGISTER':
-                dbAccount.register(data.username, data.password, '', (success) => {
+                dbAccount.register(data.username, data.password, '', (success, acc) => {
                     socket.sendMessage({
                         id: 'REGISTER',
                         success: success,
                         username: data.username,
-                        password: data.password
+                        password: data.password,
+                        profileImage: acc !== null ? acc.profileImage : ''
                     })
                 })
                 break;
@@ -37,7 +38,7 @@ const server = net.createServer((socket) => {
                         exists: exists,
                         username: data.username,
                         password: data.password,
-                        profileImage: acc.profileImage
+                        profileImage: acc !== null ? acc.profileImage : ''
                     })
                 })
                 break;

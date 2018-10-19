@@ -14,10 +14,10 @@ accountSchema.statics.register = function(user, pass, profileImage, callback){
 
     acc.save((err) => {
         if(!err){
-            callback(true);
+            callback(true, acc);
         }
         else{
-            callback(false);
+            callback(false, null);
         }
     })
 }
