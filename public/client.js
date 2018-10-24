@@ -139,3 +139,13 @@ function receiveMessage(data){
  </div>`)
  window.scrollTo(0,document.body.scrollHeight);
 }
+
+function openUserList(){
+  document.getElementById("userList").style.width = 100;
+  document.getElementById("main").style.marginLeft = 100;
+}
+
+function closeUserList(){
+  document.getElementById("userList").style.width = 0;
+  document.getElementById("main").style.marginLeft = 0;
+}
