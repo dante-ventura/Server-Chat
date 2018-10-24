@@ -6,6 +6,8 @@ var net = require('net'),
     storage = require('electron-json-storage');
 
 var socket;
+var username = '',
+    password = '';
 
 function register(){
   var username = document.getElementById('userBox').value;
@@ -38,6 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     else if(window.location.toString().includes('index')){
+      username = data.username;
+      password = data.password;
       document.getElementById('profileImageTextBox').src = data.profileImage;
     }
     
@@ -84,8 +88,9 @@ function sendMessage(e){
 
         var text = e.currentTarget.value;
 
-        storage.get('account', function(error, data) {
-          if (error) throw error;    
+        // storage.get('account', function(error, data) {
+        //   if (error) throw error;    
+        //alert(username + ":" + password);
           
           if(text.charAt(0) === '/'){
             var command = text.substr(0,text.indexOf(' '));
@@ -94,24 +99,24 @@ function sendMessage(e){
               case '/setprofileimage':
                 socket.sendMessage({
                   id: 'SETPROFILEIMAGE',
-                  username: data.username,
-                  password: data.password,
+                  username: username,
+                  password: password,
                   link: content
                 })
             }
           }
-          else if(data.username.length > 0){         
+          else if(username.length > 0){         
             socket.sendMessage({
               id: 'MESSAGE',
-              user: data.username,
-              pass: data.password,
+              user: username,
+              pass: password,
               value: text
             });
           }
           else{
             alert('Please register/login before sending messages!');
           }
-        });
+        //});
 
         e.currentTarget.value = '';
     }

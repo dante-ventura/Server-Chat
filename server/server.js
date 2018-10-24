@@ -50,7 +50,7 @@ const server = net.createServer((socket) => {
     });
 
     socket.on('error', (err) => {
-        console.log(err);
+        //console.log(err);
     })
 
     socket.on('close', (err) => {
