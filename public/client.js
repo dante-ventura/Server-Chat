@@ -43,6 +43,12 @@ document.addEventListener('DOMContentLoaded', () => {
       username = data.username;
       password = data.password;
       document.getElementById('profileImageTextBox').src = data.profileImage;
+
+      socket.sendMessage({
+        id: 'INIT',
+        username: username,
+        password: password
+      })
     }
     
   })
@@ -56,6 +62,9 @@ function initServerConnection(){
       switch(data.id){
         case 'MESSAGE':
           receiveMessage(data);
+          break;
+        case 'USERLIST':
+          alert(data.list);
           break;
         case 'REGISTER':
           if(data.success === true){

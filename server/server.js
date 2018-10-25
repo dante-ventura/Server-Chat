@@ -42,6 +42,16 @@ const server = net.createServer((socket) => {
                     })
                 })
                 break;
+            case 'INIT':
+                dbAccount.verify(data.username, data.password, (exists, acc) => {
+                    socket.account = acc;
+                    var userlist = getUserList();
+                    socket.sendMessage({
+                        id: 'USERLIST',
+                        list: userlist
+                    })
+                })
+                break;
             case 'SETPROFILEIMAGE':
                 dbAccount.setProfileImage(data.username, data.password, data.link, (success) => {
                 })
@@ -76,6 +86,15 @@ function broadcastMessage(data){
             });
         }
     })
+}
+
+function getUserList(){
+    var users = [];
+    sockets.forEach((socket) => {
+        if(socket.account.username !== undefined)
+            users.push(socket.account.username);
+    })
+    return users;
 }
 
 server.on('error', (err) => {
