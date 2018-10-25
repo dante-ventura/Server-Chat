@@ -151,6 +151,22 @@ function openUserList(){
 }
 
 function closeUserList(){
-  document.getElementById("userList").style.width = 0;
-  document.getElementById("main").style.marginLeft = 0;
+  document.getElementById("userList").style.width = 30;
+  document.getElementById("main").style.marginLeft = 30;
+}
+
+function userListClicked(){
+  var userList = document.getElementById("userList");
+  var main = document.getElementById("main");
+  if(userList.style.width === "30px" || userList.style.width <= 30){
+    userList.style.width = "100px";
+    main.style.marginLeft = "100px";
+    var fixedWidthPercent = (.76 - ((100/document.body.clientWidth) - (30/document.body.clientWidth))) * 100;
+    document.getElementById("textBox").style.width = `${Number.parseFloat(fixedWidthPercent).toFixed(2)}%`;
+  }
+  else{
+    userList.style.width = "30px";
+    main.style.marginLeft = "30px";
+    document.getElementById("textBox").style.width = "76%";
+  }
 }

@@ -1,9 +1,10 @@
 #textBox {
     position: fixed;
     bottom: 5%;
-    width: 80%;
+    width: auto;
     margin-left: 17%;
-
+    transition: width 0.5s;
+    width: 76%;
 }
 
 #profileImageTextBoxFigure {
@@ -39,13 +40,6 @@
     padding-top: 60px;
 }
 
-.closebtn {
-    text-decoration: none;
-    font-size: 25px;
-    color: #818181;
-    display: block;
-    transition: 0.3s;
-}
 
 .user {
     padding: 8px 8px 8px 32px;
@@ -57,12 +51,20 @@
     visibility: hidden
 }
 
-.userList .closebtn {
+.userList #closebtn {
     position: absolute;
+    text-decoration: none;
+    color: #818181;
     top: 0;
-    right: 15%;
-    font-size: 36px;
+    right: 8.5px;
     margin-left: 50px;
+    font-size: 22px;
+    display: block;
+    transition: 0.3s;
+}
+
+.userList #closebtn:hover {
+    color: #d4d4d4
 }
 
 .box {
@@ -86,6 +88,16 @@
     top: 200px;
     width: 30%;
 }
+
+#main {
+    margin-left: 30px;
+    transition: margin-left .5s;
+}
+
+/* #footer {
+    margin-left: 30px;
+    transition: margin-left .5s;
+} */
 
 ::-webkit-scrollbar {     
     background-color: #fff;

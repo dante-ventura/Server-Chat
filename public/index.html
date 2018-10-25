@@ -10,14 +10,16 @@
   </head>
   <body onload="initServerConnection()">
     <div id="userList" class="userList">
-      <a class="closebtn" onclick="closeUserList()">&times;</a>
+      <span class="icon is-small" id="closebtn" onclick="userListClicked()">
+          <i class="fas fa-bars"></i>
+      </span>
+      <!-- <a class="closebtn" onclick="closeUserList()">&times;</a> -->
       <a class="user">Admin</a>
     </div>
 
   <div id="main">
     <section class="section">
-      <div class="container" id="messageContainer">
-        
+      <div class="container" id="messageContainer">   
           <div class="box" id="m1">
               <article class="media">
                 <div class="media-left">
@@ -38,20 +40,21 @@
             </div>         
       </div>
     </section>
+    <figure class="image is-48x48" id="profileImageTextBoxFigure">
+        <img class="is-rounded" id="profileImageTextBox" src="https://bulma.io/images/placeholders/128x128.png">
+    </figure>
+    <a class="button" id="settingsBtn">
+        <span class="icon is-medium">
+          <i class="fas fa-cog"></i>
+        </span>
+    </a>
+    <form action="#">
+        <input class="input" id="textBox" type="text" placeholder="Text input" onkeypress="sendMessage(event)">
+    </form>
   </div>
   </body>
 
-  <footer>
-      <figure class="image is-48x48" id="profileImageTextBoxFigure">
-          <img class="is-rounded" id="profileImageTextBox" src="https://bulma.io/images/placeholders/128x128.png">
-      </figure>
-      <a class="button" id="settingsBtn">
-          <span class="icon is-medium">
-            <i class="fas fa-cog"></i>
-          </span>
-      </a>
-      <form action="#">
-          <input class="input" id="textBox" type="text" placeholder="Text input" onkeypress="sendMessage(event)">
-      </form>
-  </footer>
+  <!-- <footer id="footer">
+
+  </footer> -->
 </html>
