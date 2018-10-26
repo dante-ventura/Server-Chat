@@ -1,5 +1,14 @@
 const net = require('net'),
       JsonSocket = require('json-socket');
+     
+var filter;
+createWordFilter();
+function createWordFilter(){
+    var Filter = require('bad-words');
+    filter = new Filter();
+    filter.addWords('coon', 'cummies', 'niglet', 'nigaboo', 'beaner', 'ahsan', 'slaphead', 'goon', 'negro', 'n1gg3r');
+
+}
 
 var sockets = [];      
 
@@ -91,7 +100,7 @@ function broadcastMessage(data){
                     id: 'MESSAGE',
                     user: acc.username,
                     pass: acc.password,
-                    value: data.value,
+                    value: filter.clean(data.value),
                     profileImage: acc.profileImage
                 });
             });
