@@ -13,6 +13,7 @@ const server = net.createServer((socket) => {
     socket = new JsonSocket(socket);
     sockets.push(socket);
     socket.loc = sockets.length-1;
+    socket.init = false;
 
     socket.on('message', (data) => {
         console.log(data);
@@ -45,10 +46,13 @@ const server = net.createServer((socket) => {
             case 'INIT':
                 dbAccount.verify(data.username, data.password, (exists, acc) => {
                     socket.account = acc;
+                    socket.init = true;
                     var userlist = getUserList();
-                    socket.sendMessage({
-                        id: 'USERLIST',
-                        list: userlist
+                    sockets.forEach((skt) => {
+                        skt.sendMessage({
+                            id: 'USERLIST',
+                            list: userlist
+                        })
                     })
                 })
                 break;
@@ -64,12 +68,19 @@ const server = net.createServer((socket) => {
     })
 
     socket.on('close', (err) => {
-        remove(sockets, socket);
-        console.log(`Socket at address: ${remoteAddress} was removed.`)
-    })
-    // socket.once('close', () => {
+        removeSocket(socket.loc);
+        console.log(`Socket at address: ${remoteAddress} was removed.`);
 
-    // })
+        if(socket.init == true){
+            var userlist = getUserList();
+            sockets.forEach((skt) => {
+                skt.sendMessage({
+                    id: 'USERLIST',
+                    list: userlist
+                })
+            })
+        }
+    })
 })
 
 function broadcastMessage(data){
@@ -91,8 +102,13 @@ function broadcastMessage(data){
 function getUserList(){
     var users = [];
     sockets.forEach((socket) => {
-        if(socket.account.username !== undefined)
-            users.push(socket.account.username);
+        try{
+            if(socket.account.username !== undefined)
+                users.push(socket.account.username);
+            }
+        catch(err){
+            console.log(`Error in getting user list: ${err}`);
+        }
     })
     return users;
 }
@@ -105,6 +121,9 @@ server.listen(3000, "127.0.0.1", () => {
     console.log(`Server running...`);
 }) 
 
-function remove(array, element) {
-    return array.filter(e => e !== element);
+function removeSocket(loc) {
+    sockets.splice(loc, 1);
+    for(var i=0; i<sockets.length; i++){
+        sockets[i].loc = i;
+    }
 }
